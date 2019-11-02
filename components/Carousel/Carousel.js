@@ -17,3 +17,62 @@
     <div class="right-button"> > </div>
   </div>
 */
+
+const carouselCont = document.querySelector(".carousel-container");
+
+carouselCont.appendChild(createCarousel());
+
+function createCarousel(){
+  const carousel = document.createElement("div");
+  const leftBtn = document.createElement("div");
+  const img1 = document.createElement("img");
+  const img2 = document.createElement("img");
+  const img3 = document.createElement("img");
+  const img4 = document.createElement("img");
+  const rightBtn = document.createElement("div");
+
+  const imgArr = [img1, img2, img3, img4];
+  let currentIndex = 0;
+
+  carousel.append(leftBtn, img1, img2, img3, img4, rightBtn);
+
+
+  carousel.classList.add("carousel");
+  leftBtn.classList.add("left-button");
+  rightBtn.classList.add("right-button")
+  img1.src = "./assets/carousel/mountains.jpeg"
+  img2.src = "./assets/carousel/computer.jpeg"
+  img3.src = "./assets/carousel/trees.jpeg"
+  img4.src = "./assets/carousel/turntable.jpeg"
+
+  img1.style.display = "inline";
+  
+  leftBtn.textContent = "<"
+  rightBtn.textContent = ">"
+
+  leftBtn.addEventListener("click", () => {
+    TweenMax.to((imgArr[currentIndex]) , 1, {autoAlpha: 0, display: "none"});
+    if(currentIndex === 0){
+      currentIndex = imgArr.length;
+    }
+    currentIndex--;
+    
+    setTimeout(function(){
+      TweenMax.to((imgArr[currentIndex]) , 0.3, {autoAlpha: 1, display: "inline"});
+    }, 350);
+  })
+  rightBtn.addEventListener("click", () => {
+      TweenMax.to((imgArr[currentIndex]) , 0.3, {autoAlpha: 0, display: "none"});
+      currentIndex += 1;
+      if(currentIndex === imgArr.length){
+        currentIndex = 0;
+      }
+      setTimeout(function(){
+        TweenMax.to((imgArr[currentIndex]) , 0.3, {autoAlpha: 1, display: "inline"});
+      }, 350);
+      
+  })
+
+
+  return carousel;
+} 
